@@ -14,6 +14,12 @@ class FilmesController extends Controller
         return Inertia::render("Filme");
     }
 
+    public function detalhes()
+    {
+        $filmes = Filmes::all();
+        return response()->json($filmes);
+    }
+
     public function criar(Request $request)
     {
         $request->validate([
@@ -43,7 +49,7 @@ class FilmesController extends Controller
             'ano_lancamento' => $request->ano_lancamento,
             'duracao' => $request->duracao,
             'classificacao' => $request->classificacao,
-            'imagem' => $imageName,
+            'imagem' => $request->imagem,
         ]);
 
         return response()->json(['message' => 'Filme criado com sucesso!'], 201);

@@ -17,6 +17,7 @@ Route::post('/clientes', [ClienteController::class, 'criar'])->name('clientes.st
 Route::get('/clientes/{cliente} atualizar', [ClienteController::class, 'atualizar'])->name('clientes.update');
 
 Route::get('/filmes', [FilmesController::class, 'index'])->name('filmes.index');
+Route::get('/filmes/listar', [FilmesController::class, 'detalhes'])->name('filmes.show');
 Route::get('/filmes/criar', [FilmesController::class, 'criar'])->name('filmes.create');
 Route::post('/filmes', [FilmesController::class, 'criar'])->name('filmes.store');
 Route::get('/filmes/{filme} atualizar', [FilmesController::class, 'atualizar'])->name('filmes.update');

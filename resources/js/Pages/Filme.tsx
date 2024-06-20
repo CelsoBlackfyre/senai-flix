@@ -12,6 +12,7 @@ const FilmesForm = () => {
         duracao: "",
         classificacao: "",
         imagem: null,
+        imagem_url: "",
     });
 
     const handleChange = (e) => {
@@ -83,6 +84,7 @@ const FilmesForm = () => {
         formData.append("classificacao", form.classificacao);
         if (form.imagem) {
             formData.append("imagem", form.imagem);
+            
         }
 
         try {

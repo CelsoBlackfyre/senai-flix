@@ -7,7 +7,7 @@ const FilmesLista = () => {
     useEffect(() => {
         const fetchFilmes = async () => {
             try {
-                const response = await axios.get("/filmes");
+                const response = await axios.get("/filmes/listar");
                 setFilmes(response.data);
             } catch (error) {
                 console.error("Erro ao buscar filmes:", error);
@@ -16,6 +16,7 @@ const FilmesLista = () => {
 
         fetchFilmes();
     }, []);
+    console.log(filmes);
     return (
         <div className="container mx-auto px-4">
             <h1 className="text-3xl font-bold mt-8 mb-4">Lista de Filmes</h1>
