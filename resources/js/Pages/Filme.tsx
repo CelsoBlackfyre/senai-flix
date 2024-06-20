@@ -84,7 +84,8 @@ const FilmesForm = () => {
         formData.append("classificacao", form.classificacao);
         if (form.imagem) {
             formData.append("imagem", form.imagem);
-            
+            form.imagem_url = URL.createObjectURL(form.imagem);
+            formData.append("imagem_url", form.imagem_url);
         }
 
         try {
@@ -105,6 +106,7 @@ const FilmesForm = () => {
                 duracao: "",
                 classificacao: "",
                 imagem: null,
+                imagem_url: "",
             });
         } catch (error) {
             console.error("Erro ao criar filme:", error);
