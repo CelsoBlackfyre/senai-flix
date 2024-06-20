@@ -9,10 +9,10 @@ const ClienteLista = () => {
     useEffect(() => {
         const fetchClientes = async () => {
             try {
-                const response = await axios.get("/cliente");
+                const response = await axios.get("/clientes");
                 setClientes(response.data);
             } catch (error) {
-                console.error("Error fetching clientes:", error);
+                console.error("Erro ao buscar clientes:", error);
             }
         };
 

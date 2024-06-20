@@ -23,6 +23,53 @@ const FilmesForm = () => {
         setForm({ ...form, imagem: e.target.files[0] });
     };
 
+    // const handleSubmit = async (e) => {
+    //     const formData = new FormData();
+    //     const formArray = [
+    //         ["titulo", form.titulo],
+    //         ["diretor", form.diretor],
+    //         ["descricao", form.descricao],
+    //         ["genero", form.genero],
+    //         ["ano_lancamento", form.ano_lancamento],
+    //         ["duracao", form.duracao],
+    //         ["classificacao", form.classificacao],
+    //     ];
+
+    //     formArray.forEach(([key, value]) => {
+    //         if (value) {
+    //             formData.append(key, value);
+    //         }
+    //     });
+
+    //     if (form.imagem) {
+    //         formData.append("imagem", form.imagem);
+    //     }
+
+    //     try {
+    //         const response = await axios.post("/filmes", formData, {
+    //             headers: {
+    //                 "Content-Type": "multipart/form-data",
+    //             },
+    //             timeout: 10000,
+    //         });
+
+    //         console.log("Filme criado com sucesso:", response.data);
+
+    //         setForm({
+    //             titulo: "",
+    //             diretor: "",
+    //             descricao: "",
+    //             genero: "",
+    //             ano_lancamento: "",
+    //             duracao: "",
+    //             classificacao: "",
+    //             imagem: null,
+    //         });
+    //     } catch (error) {
+    //         console.error("Erro ao criar o filme:", error);
+    //     }
+    // };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -64,7 +111,12 @@ const FilmesForm = () => {
 
     return (
         <div className="container mx-auto max-w-screen-lg px-4 py-8">
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form
+                onSubmit={handleSubmit}
+                className="space-y-4"
+                encType="multipart/form-data"
+                method="POST"
+            >
                 <div className="flex flex-wrap -mx-2">
                     <div className="w-full md:w-1/2 px-2">
                         <label htmlFor="titulo" className="block mb-1">
