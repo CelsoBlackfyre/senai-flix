@@ -13,7 +13,7 @@ export default function Cliente() {
         cep: "",
         email: "",
         telefone: "",
-        statu: 1,
+        status: 1,
     });
 
     const handleChange = (e) => {

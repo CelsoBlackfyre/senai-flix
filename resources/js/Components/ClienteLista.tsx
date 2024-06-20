@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const ClienteLista = () => {
-    const [clientes, setClientes] = useState([]);
+    const [clientes, setClientes] = useState<any[]>([]);
 
     useEffect(() => {
         const fetchClientes = async () => {

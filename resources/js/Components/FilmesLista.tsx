@@ -5,18 +5,34 @@ import axios from "axios";
 
 const FilmesLista = () => {
     const [filmes, setFilmes] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState("");
+    let dados: any[] = [];
+
+    // async function fetchFilmes() {
+    //     try {
+    //         const response = await axios.get("/filmes");
+    //         setFilmes(response.data);
+    //     } catch (error) {
+    //         const errorMessage = "Error: " + error.message;
+    //         setError(errorMessage);
+    //         console.log(errorMessage);
+    //     } finally {
+    //         setIsLoading(false);
+    //     }
+    // }
+
+    const fetchFilmes = async () => {
+        try {
+            const response = await axios.get("/filmes");
+            setFilmes(response.data);
+            dados = Array.from(response.data);
+        } catch (error) {
+            console.error("ERRO BUSCANDO FILMES ", error);
+        }
+    };
 
     useEffect(() => {
-        // Fetch filmes data from Laravel backend API
-        const fetchFilmes = async () => {
-            try {
-                const response = await axios.get("filmes");
-                setFilmes(response.data);
-            } catch (error) {
-                console.error("Error fetching filmes:", error);
-            }
-        };
-
         fetchFilmes();
     }, []);
 
@@ -24,7 +40,7 @@ const FilmesLista = () => {
         <div className="container mx-auto px-4">
             <h1 className="text-3xl font-bold mt-8 mb-4">Lista de Filmes</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {filmes.map((filme) => (
+                {dados.map((filme) => (
                     <div
                         key={filme.id}
                         className="bg-white rounded-lg overflow-hidden shadow-md"

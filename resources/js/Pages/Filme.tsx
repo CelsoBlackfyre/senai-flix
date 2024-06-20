@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import FilmesLista from "@/Components/FilmesLista";
 
 const FilmesForm = () => {
     const [form, setForm] = useState({
@@ -33,10 +34,12 @@ const FilmesForm = () => {
         formData.append("ano_lancamento", form.ano_lancamento);
         formData.append("duracao", form.duracao);
         formData.append("classificacao", form.classificacao);
-        formData.append("imagem", form.imagem);
+        if (form.imagem) {
+            formData.append("imagem", form.imagem);
+        }
 
         try {
-            const response = await axios.post("/api/filmes", formData, {
+            const response = await axios.post("/filmes", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
@@ -65,7 +68,7 @@ const FilmesForm = () => {
                 <div className="flex flex-wrap -mx-2">
                     <div className="w-full md:w-1/2 px-2">
                         <label htmlFor="titulo" className="block mb-1">
-                            Título:
+                            Titulo:
                         </label>
                         <input
                             type="text"
