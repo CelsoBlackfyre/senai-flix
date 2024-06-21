@@ -49,7 +49,7 @@ class FilmesController extends Controller
             'ano_lancamento' => $request->ano_lancamento,
             'duracao' => $request->duracao,
             'classificacao' => $request->classificacao,
-            'imagem' => $request->imagem,
+            'imagem' => $imageName,
         ]);
 
         return response()->json(['message' => 'Filme criado com sucesso!'], 201);

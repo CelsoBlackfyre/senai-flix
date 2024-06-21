@@ -1,9 +1,21 @@
 import React, { useState } from "react";
 import axios from "axios";
 import FilmesLista from "@/Components/FilmesLista";
+import SideBar from "@/Components/SideBar";
+
+type Filmes = {
+    titulo: string;
+    diretor: string;
+    descricao: string;
+    genero: string;
+    ano_lancamento: string;
+    duracao: string;
+    classificacao: string;
+    imagem: Blob | null;
+};
 
 const FilmesForm = () => {
-    const [form, setForm] = useState({
+    const [form, setForm] = useState<Filmes>({
         titulo: "",
         diretor: "",
         descricao: "",
@@ -12,7 +24,6 @@ const FilmesForm = () => {
         duracao: "",
         classificacao: "",
         imagem: null,
-        imagem_url: "",
     });
 
     const handleChange = (e) => {
@@ -84,8 +95,6 @@ const FilmesForm = () => {
         formData.append("classificacao", form.classificacao);
         if (form.imagem) {
             formData.append("imagem", form.imagem);
-            form.imagem_url = URL.createObjectURL(form.imagem);
-            formData.append("imagem_url", form.imagem_url);
         }
 
         try {
@@ -106,7 +115,6 @@ const FilmesForm = () => {
                 duracao: "",
                 classificacao: "",
                 imagem: null,
-                imagem_url: "",
             });
         } catch (error) {
             console.error("Erro ao criar filme:", error);
@@ -115,6 +123,7 @@ const FilmesForm = () => {
 
     return (
         <div className="container mx-auto max-w-screen-lg px-4 py-8">
+            <SideBar />
             <form
                 onSubmit={handleSubmit}
                 className="space-y-4"
