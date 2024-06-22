@@ -10,7 +10,7 @@ interface Filmes {
     ano_lancamento: string;
     duracao: string;
     classificacao: string;
-    imagem: File | null;
+    imagem: Blob | null;
 }
 
 const EditarFilmes: React.FC = () => {
@@ -26,21 +26,18 @@ const EditarFilmes: React.FC = () => {
         imagem: null,
     });
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        3;
+    const handleChange = (e) => {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
     };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = (e) => {
         if (e.target.files && e.target.files.length > 0) {
             setForm({ ...form, imagem: e.target.files[0] });
         }
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const formData = new FormData();
@@ -56,11 +53,15 @@ const EditarFilmes: React.FC = () => {
         }
 
         try {
-            const response = await axios.put(`/filmes/${id}`, formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                },
-            });
+            const response = await axios.put(
+                `/filmes/${id}/atualizar`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
 
             console.log("Filme editado com sucesso:", response.data);
 
