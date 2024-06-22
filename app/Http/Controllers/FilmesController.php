@@ -82,6 +82,11 @@ class FilmesController extends Controller
         $filme->descricao = $request->descricao;
         $filme->genero = $request->genero;
         $filme->ano_lancamento = $request->ano_lancamento;
+        $filme->duracao = $request->duracao;
+        $filme->classificacao = $request->classificacao;
+        $filme->imagem = $imageName;
+        $filme->save();
+        return response()->json(['message' => 'Filme atualizado com sucesso!']);
     }
 
     public function excluir($id)

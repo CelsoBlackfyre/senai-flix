@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import FilmesLista from "@/Components/FilmesLista";
+import { useParams } from "react-router-dom";
 
-type Filmes = {
+interface Filmes {
     titulo: string;
     diretor: string;
     descricao: string;
@@ -10,10 +10,11 @@ type Filmes = {
     ano_lancamento: string;
     duracao: string;
     classificacao: string;
-    imagem: Blob | null;
-};
+    imagem: File | null;
+}
 
-const FilmesForm = () => {
+const EditarFilmes: React.FC = () => {
+    const { id } = useParams<{ id: string }>();
     const [form, setForm] = useState<Filmes>({
         titulo: "",
         diretor: "",
@@ -25,63 +26,21 @@ const FilmesForm = () => {
         imagem: null,
     });
 
-    const handleChange = (e) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    ) => {
+        3;
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
     };
 
-    const handleFileChange = (e) => {
-        setForm({ ...form, imagem: e.target.files[0] });
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length > 0) {
+            setForm({ ...form, imagem: e.target.files[0] });
+        }
     };
 
-    // const handleSubmit = async (e) => {
-    //     const formData = new FormData();
-    //     const formArray = [
-    //         ["titulo", form.titulo],
-    //         ["diretor", form.diretor],
-    //         ["descricao", form.descricao],
-    //         ["genero", form.genero],
-    //         ["ano_lancamento", form.ano_lancamento],
-    //         ["duracao", form.duracao],
-    //         ["classificacao", form.classificacao],
-    //     ];
-
-    //     formArray.forEach(([key, value]) => {
-    //         if (value) {
-    //             formData.append(key, value);
-    //         }
-    //     });
-
-    //     if (form.imagem) {
-    //         formData.append("imagem", form.imagem);
-    //     }
-
-    //     try {
-    //         const response = await axios.post("/filmes", formData, {
-    //             headers: {
-    //                 "Content-Type": "multipart/form-data",
-    //             },
-    //             timeout: 10000,
-    //         });
-
-    //         console.log("Filme criado com sucesso:", response.data);
-
-    //         setForm({
-    //             titulo: "",
-    //             diretor: "",
-    //             descricao: "",
-    //             genero: "",
-    //             ano_lancamento: "",
-    //             duracao: "",
-    //             classificacao: "",
-    //             imagem: null,
-    //         });
-    //     } catch (error) {
-    //         console.error("Erro ao criar o filme:", error);
-    //     }
-    // };
-
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const formData = new FormData();
@@ -97,13 +56,13 @@ const FilmesForm = () => {
         }
 
         try {
-            const response = await axios.post("/filmes", formData, {
+            const response = await axios.put(`/filmes/${id}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
             });
 
-            console.log("Filme criado com sucesso:", response.data);
+            console.log("Filme editado com sucesso:", response.data);
 
             setForm({
                 titulo: "",
@@ -116,7 +75,7 @@ const FilmesForm = () => {
                 imagem: null,
             });
         } catch (error) {
-            console.error("Erro ao criar filme:", error);
+            console.error("Erro ao editar filme:", error);
         }
     };
 
@@ -262,4 +221,4 @@ const FilmesForm = () => {
     );
 };
 
-export default FilmesForm;
+export default EditarFilmes;
