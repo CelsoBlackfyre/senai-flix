@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
@@ -26,6 +26,17 @@ const EditarFilmes: React.FC = () => {
         imagem: null,
     });
 
+    useEffect(() => {
+        const buscarFilmes = async () => {
+            try {
+                const response = await axios.get(`/filmes/${id}`);
+                setForm(response.data);
+            } catch (error) {
+                console.error("Erro ao buscar filmes:", error);
+            }
+        };
+        buscarFilmes();
+    }, [id]);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm({ ...form, [name]: value });
@@ -53,17 +64,14 @@ const EditarFilmes: React.FC = () => {
         }
 
         try {
-            const response = await axios.put(
-                `/filmes/${id}/atualizar`,
-                formData,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
-                }
-            );
-
-            console.log("Filme editado com sucesso:", response.data);
+            const response = await axios
+                .put(`/filmes/${id}`, formData)
+                .then((response) => {
+                    return response.data;
+                })
+                .catch((error) => {
+                    console.error("Erro ao editar filme:", error);
+                });
 
             setForm({
                 titulo: "",

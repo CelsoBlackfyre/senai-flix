@@ -84,7 +84,6 @@ class FilmesController extends Controller
         $filme->ano_lancamento = $request->ano_lancamento;
         $filme->duracao = $request->duracao;
         $filme->classificacao = $request->classificacao;
-        $filme->imagem = $imageName;
         $filme->save();
         return response()->json(['message' => 'Filme atualizado com sucesso!']);
     }
@@ -93,5 +92,11 @@ class FilmesController extends Controller
     {
         $filme = Filmes::find($id);
         $filme->delete();
+    }
+
+    public function ver($id)
+    {
+        $filme = Filmes::find($id);
+        return response()->json($filme);
     }
 }
