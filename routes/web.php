@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FilmesController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,7 +28,13 @@ Route::put('/filmes/{filme}', [FilmesController::class, 'atualizar'])->name('fil
 Route::get('/filmes/{filme}', [FilmesController::class, 'ver'])->name('filmes.ver');
 Route::delete('/filmes/{filme}', [FilmesController::class, 'excluir'])->name('filmes.destroy');
 
-
+Route::middleware('auth')->group(function () {
+    Route::get('/Usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
+    Route::get('/Usuarios/listar', [UsuarioController::class, 'detalhes'])->name('usuarios.show');
+    Route::get('/Usuarios/criar', [UsuarioController::class, 'criar'])->name('usuarios.create');
+    Route::post('/Usuarios', [UsuarioController::class, 'criar'])->name('usuarios.store');
+    Route::get('/Usuarios/{usuario}')->name('usuarios.update');
+});
 // Route::get('/', function () {
 //     return Inertia::render('Welcome', [
 //         'canLogin' => Route::has('login'),
